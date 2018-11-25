@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Loading annotated beans -->
+	<context:component-scan base-package="com.zycus.component" />
+
+	<!-- 
+    <bean id="hw" class="com.zycus.component.HelloWorld">
+        
+    </bean>
+     -->
+     
+     <bean id="iciciBank" class="com.zycus.component.IciciBank">
+     </bean>
+     
+     <bean id="hdfcAtm" class="com.zycus.component.HdfcAtm">
+     	<property name="bank" ref="iciciBank" />
+     </bean>
+     
+     
+     
+    <bean id="te" class="com.zycus.component.MyTextEditor">
+        <!-- setter injection -->
+        <property name="spellChecker" ref="sp" />
+    </bean>
+    
+    <bean id="sp" class="com.zycus.component.MySpellChecker">
+        
+    </bean>
+    
+
+</beans>

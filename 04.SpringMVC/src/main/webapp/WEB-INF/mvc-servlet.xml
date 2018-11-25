@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Loading annotated beans -->
+	<context:component-scan base-package="com.zycus.controller,com.zycus.service,com.zycus.dao" />
+	
+	<!-- Enabling all the important features of Spring MVC -->
+	<mvc:annotation-driven />
+
+
+	<!-- JPA Configuration -->
+	
+	<!-- DataSource -->
+	<bean id="derbyDs" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
+        <property name="url" value="jdbc:derby://localhost:1527/trainingdb" />
+        <property name="username" value="scott" />
+        <property name="password" value="tiger" />
+    </bean>
+
+	<!-- EntityManagerFactory -->
+	<bean id="myEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="derbyDs" />
+    </bean>	
+	
+	<!-- TransactionManager -->
+	<bean id="tm" class="org.springframework.orm.jpa.JpaTransactionManager">
+    	<property name="entityManagerFactory" ref="myEmf" />
+    </bean>
+	
+	 <tx:annotation-driven transaction-manager="tm" />
+	 
+</beans>
